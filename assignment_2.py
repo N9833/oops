@@ -1,5 +1,9 @@
+# simple program for house listing management
+# yeah it's kinda like a house flipper CLI thing
+
 class Listing:
     def __init__(self, address, price, bedrooms, bathrooms, sqft):
+        # private-ish vars, dont mess with em directly
         self.__address = address
         self.__price = price
         self.__bedrooms = bedrooms
@@ -7,13 +11,14 @@ class Listing:
         self.__sqft = sqft
 
     def __str__(self):
+        # printing the listing in a nice format
         return (f"Address: {self.__address}\n"
                 f"Price: ${self.__price:,.2f}\n"
                 f"Bedrooms: {self.__bedrooms}\n"
                 f"Bathrooms: {self.__bathrooms}\n"
                 f"Sq. Ft.: {self.__sqft}\n")
 
-    # Getter and setter for price
+    # getter and setter for price cuz u might wanna change it later
     @property
     def price(self):
         return self.__price
@@ -23,15 +28,16 @@ class Listing:
         if new_price > 0:
             self.__price = new_price
         else:
-            print("Price must be a positive value.")
+            print("uhh nope, price must be positive")
 
-    # I have added property to get address 
+    # also added one for addrss just in case
     @property
     def address(self):
         return self.__address
 
 
 def main():
+    # some sample listings to start with
     listings = [
         Listing("1234 Main St, Anytown, USA", 350000.00, 3, 2, 1800),
         Listing("5678 Oak Ln, Suburbia, USA", 275000.00, 4, 3, 2200),
@@ -39,7 +45,8 @@ def main():
     ]
 
     while True:
-        print("\nWelcome to the House Flipper CLI.")
+        # basic menu every time
+        print("\nWelcome to the House Flipper CLI thing.")
         print("1. See all listings")
         print("2. Check a specific listing's details")
         print("3. Buy a house")
@@ -51,10 +58,10 @@ def main():
         if choice == '1':
             print("\n--- Available Listings ---")
             if not listings:
-                print("No listings right now.")
+                print("No listings right now, sorry.")
             else:
                 for i, house in enumerate(listings, 1):
-                    print(f"--- Listing #{i} ---")
+                    print(f"\n--- Listing #{i} ---")
                     print(house)
 
         elif choice == '2':
@@ -64,9 +71,9 @@ def main():
                     print("\n--- Listing Details ---")
                     print(listings[num - 1])
                 else:
-                    print("That listing number doesn't exist.")
+                    print("Hmm that listing number doesnt exist.")
             except ValueError:
-                print("Please enter a valid number.")
+                print("Enter a number dude...")
 
         elif choice == '3':
             try:
@@ -74,39 +81,34 @@ def main():
                 if 1 <= num <= len(listings):
                     purchased = listings.pop(num - 1)
                     print(f"\nYou just bought the house at {purchased.address}.")
-                    print("It's no longer listed.")
+                    print("It's off the market now.")
                 else:
-                    print("That listing number doesn't exist.")
+                    print("That listing number aint valid.")
             except ValueError:
-                print("Please enter a valid number.")
+                print("Numbers only, thx.")
 
         elif choice == '4':
             print("\n--- Adding a New Listing ---")
             try:
                 address = input("Enter the address: ")
                 price = float(input("Enter the price: "))
-                bedrooms = int(input("Enter the number of bedrooms: "))
-                bathrooms = int(input("Enter the number of bathrooms: "))
-                sqft = int(input("Enter the square foot: "))
+                bedrooms = int(input("How many bedrooms? "))
+                bathrooms = int(input("And the bathrooms? "))
+                sqft = int(input("Enter the square footage (approx): "))
 
                 new_listing = Listing(address, price, bedrooms, bathrooms, sqft)
                 listings.append(new_listing)
-                print(f"\nListing for {address} has been added.")
+                print(f"\nListing for {address} has been added. yay!")
             except ValueError:
-                print("Something went wrong. fix that  you're entering numbers where needed.")
+                print("Something went wrong lol. enter nums where it ask for nums...")
 
         elif choice == '5':
-            print("Goodbye.")
+            print("Ok bye ")
             break
 
         else:
-            print("Invalid choice. Please try again.")
-
-
+            print("Not a valid choice, try again?")
 
 
 if __name__ == "__main__":
     main()
-
-
-
